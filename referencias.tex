@@ -1,5 +1,23 @@
 \clearpage
 \newpage
-\section*{Referências Bibliográficas}
+% \section*{Referências Bibliográficas}
+% \printbibliography[heading=none]
 
-\printbibliography[heading=none]
+\makeatletter
+\def\thebibliography#1{\section*{Referências Bibliográficas\@mkboth
+  {Referências Bibliográficas}{Referências Bibliográficas}}\list
+  {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+\advance\leftmargin\labelsep
+\usecounter{enumi}}
+\def\newblock{\hskip .11em plus .33em minus .07em}
+\sloppy\clubpenalty4000\widowpenalty4000
+\sfcode`\.=1000\relax}
+\makeatother
+
+
+% \pagestyle{misc}
+%\bibliographystyle{apalike}
+\renewcommand\betweenauthors{e}
+
+\bibliographystyle{recursos/icmc-modificado}
+\bibliography{recursos/references.bib}
