@@ -1,0 +1,13 @@
+\newpage
+\clearpage
+\section{Considerações Finais}
+\label{final:final}
+
+Dentre as segmentações disponíveis e estudadas no decorrer desses estudos, entre as segmentações tradicionais (Capítulo \ref{segment:image}), segmentações semânticas (Capítulo \ref{semantic:semantic}), segmentações de instancias (Capítulo \ref{instance:instance}) e segmentações panópticas (Capítulo \ref{panoptic:panoptic}), ficou evidente que a mais próxima do olhar e compreensão humana, que é atingido desde a infância \cite{Mohan2020}, é a segmentação panóptica, visto que classifica todos os pixels de uma cena, além de proporcionar a separação de instâncias, podendo ter uma distinção dentre os objetos de mesma classe.
+
+Dessa forma, as segmentações panópticas são totalmente adequadas para contextos que tenham uma problemática em que todos os pixels de determinada cena possuem relevância e são determinados como região de interesse, o que se aplica para cenas que envolvam imagens médicas relacionadas a tecidos e orgãos em conjunto ou a sistemas e cidades inteligentes, sendo exemplificado por carros autônomos, que necessariamente precisam "estar atentos" a todo novo objeto ou paisagem que se faz presente na cena \cite{Pan2020}.
+
+Todavia, embora as segmentações panópticas sejam as mais adequadas para situações em que todos os pixels necessitam de uma segmentação, vale dizer que a mesma ainda possui pontos a serem relevados. Primeiramente, cita-se o fato das segmentações panópticas possuírem uma abstração até determinado nível quando se trata da segmentação de um objeto da clase \textit{thing}, ou seja, em um caso que há a necessidade de segmentar partes do corpo de uma pessoa, atualmente as segmentações panópticas não podem assim fazer, segmentando a pessoa como um todo. Depois, outro ponto a se comentar está ligado a pequena variação de conjuntos de dados que estejam preparados e anotados para o uso em segmentações panópticas, sendo que os disponíveis estão normalmente relacionados a cidades e instancias pertencentes à mesmas classes.
+
+Assim, levando em conta as considerações do parágrafo anterior, bem como as métricas de qualidades baixas alcançadas pelos modelos de segmentação panóptica observados nas Tabelas \ref{conclusion:table:1}, \ref{conclusion:table:2} e \ref{conclusion:table:1}, o estudo de modificações e unificações nos modelos de segmentação, bem como a aplicação de técnicas artesanais e estudo de conjuntos de dados relacionados a ambientes diferentes do habitual possibilitam a melhoria de técnicas de segmentações panópticas, assim como melhorias relacionadas a indicadores de $PQ$, que podem ser estudados futuramente.
+

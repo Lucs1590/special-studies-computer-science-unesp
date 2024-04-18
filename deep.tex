@@ -1,0 +1,403 @@
+\newpage
+\clearpage
+\section{Redes Neurais Profundas}
+\label{deep:deep}
+
+Inspiradas no modelo de sistema nervoso de seres inteligentes, as redes neurais são compostas por um conjunto interconectado de neurônios de modo que, assim como o sistema humano, um neurônio, quando conectado com outros neurônios, pode comunicar impulsos nervosos por meio de sinapses. A representação do modelo humano pode ser observado na Figura \ref{deep:fig:1}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Representação do neurônio biológico.}
+    \includegraphics[width=1\linewidth]{recursos/imagens/deep/neuronio.jpg}
+    \label{deep:fig:1}
+
+    \vspace*{1 cm}
+    Fonte: \cite{VanessaSardinhadosSantos2021Neuronio:Educacao}.
+\end{figure}
+
+Dentre as representações matemáticas, destaca-se o modelo pioneiro desenvolvido por McCulloch e Pitts (1943) \cite{mcculloch1943logical} sendo que sua representação matemática se dá pela equação:
+
+\begin{equation}
+    \label{deep:eq:1}
+    J = A(\sum_{i = 1}^{N} w_i x_i +b).
+\end{equation}
+
+Para a Equação \ref{deep:eq:1} e para a Figura \ref{deep:fig:2}, é importante dizer que $J$ representa a saída do neurônio, enquanto $A(x)$ representa a função de ativação $A$, $x_i$ é a entrada a partir de $i$. Logo, é possível observar que por meio dos dendritos ocorre a entrada dos dados que é somada (ponderadamente) no núcleo $\sum_{i = 1}^{N} w_ix_i$ com as \textit{bias} $b$, fator adicionado ao modelo matemático desenvolvido por \cite{mcculloch1943logical}. Enfim, o resultado anterior passa pela função de ativação $A$ e resulta em uma saída $J$, que enviada é pelos axônios a outros neurônios. Vale citar que $(x_1, ..., x_n)$ é assimilado aos dendritos que são ponderados pelos pesos $(w_1, ..., w_n)$. Além disso, é comum ver a representação do modelo supracitado através da seguinte imagem (Figura \ref{deep:fig:2}):
+
+\begin{figure}[H]
+    \centering
+    \caption{Representação matemática de neurônio \cite{mcculloch1943logical}.}
+    \includegraphics[width=1\linewidth]{recursos/imagens/deep/neuronio_mc.png}
+    \label{deep:fig:2}
+
+    \vspace*{1 cm}
+    Fonte: adaptado de \cite{mcculloch1943logical}.
+\end{figure}
+
+A partir do modelo de neurônio desenvolvido por \cite{mcculloch1943logical},  outros trabalhos foram desenvolvidos, no qual vale ressaltar o trabalho de Rosenblatt (1958) \cite{Rosenblatt1958}, que propôs um modelo de neurônio e o nomeou de Perceptron, o qual tem como princípio o uso de uma saída binária. Logo, destaca-se que a sua função de ativação é dada de forma condicional e pode ser representada pela Equação \ref{deep:eq:2} \cite{Rosenblatt1958}.
+
+\begin{equation}
+    \label{deep:eq:2}
+    A(Y') = \left\{\begin{matrix}
+     1,& se \sum_{N}^{i=1} w_i x_i + b \geq 0 \\ 
+     0,& caso \;  contrario.
+    \end{matrix}\right.
+\end{equation}
+
+Dessa forma, entende-se que $b$ representa o viés que determina um limiar para a ativação do neurônio. O vetor $\textbf{x}$, corresponde à entrada da rede, enquanto $\textbf{W}$ é a matriz de pesos que deve ser inicializada aleatoriamente e é ajustada no decorrer do treinamento.
+
+Dentre as vantagens para o modelo Perceptron, pode-se salientar a sua aptidão para resolução de problemas lógicos, como também para problemas linearmente separáveis, todavia, em meio às suas limitações, reforça-se sua imperícia em relação a problemas linearmente separáveis, em que o Perceptron não é capaz de gerar um hiperplano para a separação de problemas não lineares (do exemplo na Figura \ref{deep:fig:3}\subref{deep:fig:3.2}).
+
+\begin{figure}[H]
+   \caption{Representação de problemas linearmente e não linearmente separáveis.}
+   \centering
+   \label{deep:fig:3}
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[height=1in]{recursos/imagens/deep/l_separavel.png}
+        \caption{Problema linearmente separável.}
+        \label{deep:fig:3.1}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[height=1in]{recursos/imagens/deep/nl_separavel.png}
+        \caption{Problema não linearmente separável.}
+        \label{deep:fig:3.2}
+    \end{subfigure}%
+
+    \vspace*{1 cm}
+    Fonte: retirado e adaptado de \cite{Goncalves}.
+\end{figure}
+
+Para suprir essa necessidade de trabalhar com problemas não lineares, Werbos (1974) \cite{Werbos:74} realizou uma proposta de utilizar várias camadas de neurônios Perceptron juntos, de modo que obrigatoriamente possuísse uma camada de entrada, oculta e de saída. Assim, esse modelo - nomeado de \textit{Multi Layer Perceptron} (MLP) \cite{Werbos:74} e representado na Figura \ref{deep:fig:4} - possibilitou o trabalho com funções de ativação não lineares e o desenvolvimento de técnicas de aprendizado, como a \textit{backpropagation}, desenvolvida por \cite{rumelhart1986learning}, a qual será detalhada na Seção \ref{deep:backprop}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Representação do modelo MLP.}
+    \includegraphics[width=1\linewidth]{recursos/imagens/deep/mlp.png}
+    \label{deep:fig:4}
+
+    \vspace*{1 cm}
+    Fonte: do próprio autor.
+\end{figure}
+
+Entretanto, com o uso dos modelos citados, a tentativa de resolver problemas de nível de complexidade maior e o desenvolvimento de trabalhos que contribuíssem para o estado-da-arte, percebeu-se que ao adicionar mais camadas era possível trabalhar com uma base de dados maior e mais complexa, além de obter melhores resultados e uma etapa maior de treinamento, o que deu origem às intituladas redes neurais de aprendizado profundo, ou em inglês, \textit{deep learning} \cite{Goodfellow2016}. No que lhe concerne, essas possuem o princípio de aprender os parâmetros e representações dos dados de acordo com as suas interações \cite{ponti2018funciona}, assim, possibilitando o algoritmo combinar parâmetros e simplificá-los antes de propagar a representações que consideram as demais camadas \cite{Goodfellow2016}.
+
+Destarte, o uso e desenvolvimento de \textit{deep learning} tem se popularizado e sido considerado a resposta para problemas de diversas áreas, como segmentações em vários contextos, desenvolvimentos de carros autônomos, segurança, otimização de modelos de busca e afins \cite{Ghosh2019}, sendo que essa popularização é propicia devido: 1) ao desenvolvimento acelerado de \textit{hardwares} que acrescentam velocidade no treinamento dessas redes e 2) ao grande aumento de dados variados (com adventos como o \textit{big data}) \cite{Szegedy2015, ponti2018funciona}.
+
+Por conseguinte, no restante nas demais seções  deste capítulo serão apresentadas algumas variações de funções de ativação (Seção \ref{deep:activation}), sobre o processo de treinamento (Seção \ref{deep:train}) e de testes (Seção \ref{deep:test}) e, finalmente, sobre redes neurais convolucionais (Seção \ref{deep:CNN}).
+
+
+\subsection{Funções de Ativação}
+\label{deep:activation}
+
+Quanto às funções de ativação, destaca-se que na seção anterior foi apresentada uma função de ativação binária, todavia, existem outras funções de ativação que foram estudadas e são utilizadas para uma melhor adequação em contextos específicos.
+
+As funções de ativação, como citado brevemente e expressa por $A$ na Equação \ref{deep:eq:1}, é calculada pelo neurônio e disseminada para os próximos neurônios.  Para essa Seção o valor calculado $\sum_{i = 1}^{N} w_ix_i +b$ ( entrada da função de ativação) será representado por $Y'$, de modo que poderemos ver sua atuação, a seguir, nas funções de ativação limiar, Linear, Sigmóide, ReLU e Sofmax.
+
+
+\subsubsection{Função Limiar}
+A função limiar define um limite (\textit{threshold}) $\gamma$, em que valores abaixo de $\gamma$ indicam uma saída sem excitação, para valores acima de $\gamma$, há a excitação para o neurônio, utilizando assim, de medidas binárias, ou seja, 0 e 1, respectivamente.
+
+Essa função se faz eficiente quando trabalhado com 2 classes, todavia passa a ter dificuldades quando atuando em problemas multi-classes, visto que não garante a excitação do único neurônio da camada de saída.
+
+Em relação à função de ativação desenvolvida e utilizada no Perceptron, pode-se dizer que o valor de $\gamma = 0$, é definida matematicamente por \cite{mcculloch1943logical} segundo a Equação \ref{deep:eq:3}:
+
+\begin{equation}
+    \label{deep:eq:3}
+    A(Y') = \left\{\begin{matrix}
+     1,& se \; Y' \geq \gamma \\ 
+     0,& \text{caso contrário}.
+    \end{matrix}\right.
+\end{equation}
+
+
+\subsubsection{Função Linear}
+Para suprir a problemática de trabalhar com contextos de multi-classe, saídas contínuas podem ajudar quanto à interpretação e subjugar o problema da função limiar, sendo que para essa atividade é adequado o uso da função linear. Porém, é importante ter conhecimento que os resultados expressos por funções lineares também são lineares, não sendo recomendado o seu uso para atividades que não pertencem a esses problemas lineares. A função linear pode ser expressa pela Equação \ref{deep:eq:5}, segundo \cite{Rosenblatt1958}:
+
+\begin{equation}
+    \label{deep:eq:5}
+    f(Y') = \alpha Y'.
+\end{equation}
+
+
+\subsubsection{Função Sigmoide}
+As funções sigmoides não se limitam a problemas lineares, assim sendo caracterizada como função de ativação não-linear e possibilitando o uso de probabilidade quanto à saída do neurônio.
+
+Essa função de ativação também é cognominada e expressa por \cite{glorot2011deep} como função logística. Sua expressão matemática se dá por:
+
+\begin{equation}
+    \label{deep:eq:6}
+    f(Y') = \frac{1}{1 + e^{Y'}}.
+\end{equation}
+
+A desvantagem dessa função encontra-se em situações de variação do eixo x, em que há uma  dissipação do seu gradiente, implicando em um aprendizado mais lento nos neurônios das primeiras camadas em relação aos das últimas, tendo em vista os valores muito pequenos no início.
+
+\subsubsection{Função ReLU}
+A função desenvolvida por \cite{Hahnioser2000} e popularmente conhecida como ReLU (\textit{rectified linear unit}) se faz útil nas camadas ocultas da rede neural \cite{Goodfellow2016}, sendo que sua utilidade é destacada por não permitir resultados negativos \cite{Dahl2013} e ter uma rápida convergência, principalmente quando comparada à função sigmoide, além de não passar por problemas de perda do gradiente. Sua função é definida pela Equação \ref{deep:eq:7} \cite{Hahnioser2000}:
+
+\begin{equation}
+    \label{deep:eq:7}
+    f(Y') = \max(0,Y').
+\end{equation}
+
+\subsubsection{Função Softmax}
+\label{deep:soft}
+Por fim, quando se trata da função Softmax, dois processos são essenciais para a convergência do modelo em questão, sendo ele: 1) realizar a exponenciação dos valores de cada neurônio e 2) realiza a normalização de cada valor pela soma de todos os valores exponenciado no passo anterior, assim, definido uma saída no domínio $[0,1]$, fazendo com que a soma total seja sempre 1 \cite{kotu2018data} e que a saída da função seja a distribuição de probabilidade da classe. Esse comportamento garante que a função Softmax seja recomendada para problemas de multi-classe, além de determinar as probabilidades de cada uma das classes.
+
+Entretanto, em um problema de k-classes, a função Softmax pode ser expressa pela Equação \ref{deep:eq:8} \cite{kotu2018data}:
+
+\begin{equation}
+    \label{deep:eq:8}
+    P(Y = \boldsymbol{k}) = \frac{e^{z_k}}{\sum_{i=1}^{\boldsymbol{k}} e^{Y'}},
+\end{equation}
+tendo $z_k$ como cada entrada do vetor $\boldsymbol{k}$.
+
+
+\subsection{Treinamento}
+\label{deep:train}
+
+Definida como uma fase crucial por \cite{ponti2018funciona}, a fase de treinamento está relacionada com a minimização da função de custo (que será abordada na Seção \ref{deep:cust}), de modo que a rede ajuste os seus parâmetros iterativamente. Essas interações são explicadas por cada laço de repetição que ocorre com cada amostra, sendo esperado que o erro propagado na rede seja minimizado. Assim, quando as interações ocorrem com por todo o conjunto de dados de treinamento, é dito que aconteceu a ocorrência de uma época.
+
+Normalmente, os passos realizados em uma época são os seguintes: 1) iniciação; 2) escolha de uma amostra (normalmente de modo aleatório); 3) cálculo de saída através de função de ativação, além do, 4) erro através de função de custo e \textit{backpropagation}; 5) modificação dos pesos de cada camada da rede e; 6) uma nova interação, até que tenha se passado por todas as instâncias do conjunto de treinamento.
+
+Além da seleção aleatória, vale citar que normalmente os pesos são iniciados de modo aleatório nas camadas, assim como os hiperparâmetros, que são definidos pelo usuário na etapa de inicialização, por exemplo, taxa de aprendizado.
+
+Nesta seção, será brevemente discorrido sobre: a) as funções de custo (Seção \ref{deep:cust}), que indicam o erro da rede em relação ao conjunto de treinamento, sobre as funções de otimização (Seção \ref{deep:optimization}), que auxiliam na convergência do modelo e, por fim, sobre o algoritmo \textit{backpropagation} (Seção \ref{deep:backprop}), que propaga o erro para as camadas internas da rede.
+
+
+\subsubsection{Função de Custo}
+\label{deep:cust}
+
+As funções de custo, (do inglês, \textit{loss functions}) são responsáveis por realizar a avaliação do modelo durante a fase de treinamento, de certa maneira, avaliando quão perto o aprendizado do modelo está da resposta correta.
+
+Em meio às avaliações utilizadas como métrica para o cálculo da função de custo em relação a problemas como o de regressão, destaca-se o erro quadrático médio (ou \textit{Mean Squared Error}, MSE)\cite{Wang2004}, em que para o âmbito de visão computacional e trabalho com imagens, comumente ocorre da saída da rede neural ser uma imagem, a partir de onde calcula-se o MSE dos pixeis existentes entre a imagem predita $\boldsymbol{y'}$ e a imagem original $\boldsymbol{y}$. Assim, supondo que M e N sejam as dimensões da imagem, o MSE é calculado pela equação:
+
+\begin{equation}
+    \label{deep:eq:9}
+    MSE(\boldsymbol{y}, \boldsymbol{y'}) = \frac{1}{MN} \sum_{i=1}^{M} \sum_{j=1}^{N} (\boldsymbol{y}_{i,j} - \boldsymbol{y'}_{i,j})^2.
+\end{equation}
+
+Ainda quanto as métricas para a realização de avaliação em relação a imagens, existem várias delas descritas na literatura, todavia,  cada uma delas possui seu uso especificado para o problema que deseja resolver, por exemplo o caso das métricas para segmentações panópticas na Seção \ref{panoptic:metrics}.
+
+
+\subsubsection{Função de Otimização}
+\label{deep:optimization}
+
+O grande objetivo das funções de otimização no contexto de \textit{deep learning}, de certa forma, podem ser resumidos pela Equação \ref{deep:eq:10}, em que visualiza-se uma minimização da função de custo $f(\boldsymbol{x})$ através de pesos $\boldsymbol{\theta}$ e de entradas $\boldsymbol{x}$:
+
+\begin{equation}
+    \label{deep:eq:10}
+    \boldsymbol{\theta}* = argmin(f(\boldsymbol{x};\boldsymbol{\theta}).
+\end{equation}
+
+Em meio às diversas funções disponíveis, considera-se que o método mais utilizado é o de gradiente descendente estocástico, ou do inglês, \textit{stochastic gradient descendent} (SGD) desenvolvido inicialmente por \cite{cauchy1847methode}, assim como suas variações \cite{Goodfellow2016}, sendo que o gradiente descendente estocástico é considerado como uma adaptação do gradiente descendente e que causa a aceleração do treinamento na maioria das vezes por selecionar aleatoriamente apenas uma parcela do conjunto de treinamento. Todavia, segundo \cite{Goodfellow2016}, há casos em que o SGD não tem bom desempenho para convergir é devido a isso, são estudadas suas variações.
+
+De qualquer modo é interessante ter consciência que até então não há um consenso na escolha do melhor método de otimização para problemas em gerais, segundo aborda \cite{Goodfellow2016}.
+
+\subsubsection{\textit{Backpropagation}}
+\label{deep:backprop}
+
+Por meio do desenvolvimento de \cite{rumelhart1986learning}, o algoritmo \textit{Backpropagation} foi capaz de contribuir diretamente no desenvolvimento dos modelos de redes neurais profundas, de modo que esse algoritmo conseguiu realizar o reajuste de pesos em camadas ocultas dos modelos. Com o auxílio de uma função de custo (Seção
+\ref{deep:cust}), o erro é calculado na saída da rede $y$ e há a propagação do mesmo, iniciando da camada de saída em direção para a camada de entrada. Isso é realizado através do trabalho conjunto do algoritmo \textit{Backpropagation} e de um algoritmo de otimização (Seção \ref{deep:optimization}), em que o \textit{Backpropagation} realiza um cálculo rápido de gradientes utilizados pelos algoritmos de otimização.
+
+Dessa forma, a explicação dessa seção se resume em processos em que, dado o erro $E$ que é obtido a partir da saída da rede ($y$) em relação a um \textit{ground truth} $g$, a primeira etapa é realizada com o cálculo da derivada parcial de $E$ em relação a cada neurônio de saída, sendo formada por $\frac{\partial E}{\partial \boldsymbol{y'}}$ tendo que $i \in \mathbb{K}$ como a representação dos tamanhos de cada saída. Depois, com a aplicação da regra da cadeia de $E$ em relação às entradas $x_j$, é possível obter a seguinte expressão \cite{rumelhart1986learning}:
+
+\begin{equation}
+    \label{deep:eq:11}
+    \frac{\partial E}{\partial x_j} = \frac{\partial E}{\partial y_j} . \frac{\partial g y_j}{\partial g x_j}.
+\end{equation}
+
+A partir da expressão $\frac{\partial E}{\partial x_j}$ é possível visualizar que o erro será afetado na saída ($y$) a medida que a entrada ($x$) for alterada, segundo comentado por \cite{rumelhart1986learning}, que também exemplifica essa função na Equação \ref{deep:eq:12}, ao considerar a entrada como função linear, as conexões do neurônio $i$, assim como os pesos dos neurônios $i$ e $j$:
+
+\begin{equation}
+    \label{deep:eq:12}
+    \frac{\partial E}{\partial y_j} = \sum_j \frac{\partial E}{\partial x_j . w_{ji}}.
+\end{equation}
+
+
+\subsection{Teste}
+\label{deep:test}
+
+A etapa de teste está relacionada com a avaliação do modelo treinado nas condições descritas na Seção \ref{deep:train}, todavia, para a seção do teste deve considerar que o novo conjunto de dados seja desconhecido pela rede neural, ou seja, que não haja intersecção com o conjunto de treinamento, visto que o objetivo do treino está em validar a capacidade de abstração em relação à generalização do modelo.
+
+Entendido isso, habitualmente, é encontrado um conjunto de dados com menos exemplos quando se trata do conjunto de testes \cite{Goodfellow2016}, sendo necessário que ambos os conjuntos de dados, tanto o de teste quanto o de treinamento, possuam uma mesma distribuição dos dados.
+
+O processo de teste pode ser realizado entre as épocas do treinamento, assim, avaliando o desempenho do modelo em um conjunto desconhecido de dados e sendo possível avaliar se a rede está ou não melhorando a capacidade de generalização de acordo com o decorrer das épocas.
+
+Assim, nesta seção são descritos alguns dos elementos utilizados para auxiliar nos teste, como as métricas de avaliação (Sessão \ref{deep:metrics}) e o algoritmo \textit{cross validation} (Sessão \ref{deep:cross}), além de fenômenos que obstruem o desenvolvimento, como \textit{overfitting} e \textit{underfitting} (Sessão \ref{deep:overunder}).
+
+
+\subsubsection{Métricas de Avaliação}
+\label{deep:metrics}
+
+Outro ponto adjutório à avaliação dos modelos, tanto para o conjunto de treinamento quanto para o conjunto de teste são as métricas de avaliação de desempenho, que avaliam o andamento do treinamento do modelo do início ao fim. E referente a classificações, uma métrica que se destaca é a avaliação de acurácia, ou $Acc$, que pode ser expressa pela Equação \ref{deep:eq:13}:
+
+\begin{equation}
+    \label{deep:eq:13}
+    Acc = \frac{\text{Quantidade de predições corretas}}{\text{Quantidade de predições realizadas}}.
+\end{equation}
+
+A acurácia, como demonstrado na Equação \ref{deep:eq:13}, basicamente se resume entre a razão de acertos pela quantidade total de exemplos no conjunto e é adequada para situações em que se tem o classes balanceadas, mas quando se trata de classes desbalanceadas, pode apresentar fenômeno de \textit{underfitting} ou \textit{overfitting}, como será explicado na Seção \ref{deep:overunder}.
+
+Dessa forma, é desejado obter $Acc_{treino} \approx Acc_{teste}$, e com  acurácias altas. Sendo que as situações de \textit{overfitting} são retratadas por casos em que $Acc_{treino}$ é exacerbadamente mais alto que $Acc_{teste}$. Por outro lado, situações contrárias a essa, tendo $Acc_{teste}$ muito alta comparado a $Acc_{treino}$, ocorrem casos de \textit{underfitting}.
+
+Já em casos de regressão, o mais comum é utilizarem a métrica MSE, conforme visto na Equação \ref{deep:eq:9}.
+
+
+\subsubsection{Validação Cruzada}
+\label{deep:cross}
+
+Quando se trata na divisão entre os \textit{datasets} de treino e teste, habitualmente é comentado sobre a configuração de 20\% para teste e 80\% para treino, todavia o fato de utilizar um conjunto fixo implica em uma incerteza estatística sobre a média estimada de erro do teste, visto que pode ocorrer um desbalanceamento imprevisto \cite{Goodfellow2016}.
+
+Dessa forma, a validação cruzada (Seção \ref{deep:cross}) do inglês, \textit{cross validation}, trabalha com o principio de divisão entre os \textit{datasets} de treino e teste em subconjuntos que compõem o conjunto de dados original, realizando o cálculos a partir de escolhas aleatórias de amostras no decorrer das interações. Isto é, divide-se aleatoriamente o conjunto de dados original em um subconjunto de treinamento e de teste para cada nova interação - ou seja, uma etapa de uma época - o processo de divisão ocorre novamente.
+
+Dessa forma, o erro ($\varepsilon_T$) é computado do teste ($T$) pela média dos erros sobre interações ($\varepsilon_i$) em relação à quantidade de interações($N$), conforme a Equação \ref{deep:eq:15}:
+
+\begin{equation}
+    \label{deep:eq:15}
+    \varepsilon_T = \frac{1}{N} \sum_{i=1}^{N} \varepsilon_i.
+\end{equation}
+
+
+\subsubsection{\textit{Overfitting} e \textit{Underfitting}}
+\label{deep:overunder}
+
+As situações de \textit{overfitting} e \textit{underfitting} comumente ocorrem quando o modelo está com uma alta variância, em que os dados são "decorados" no conjunto de treino e não são generalizados quando apresentado a outros dados, como os do conjunto de teste, e, respectivamente, quando apresenta dificuldades de aprendizado, sendo assim caracterizado como um modelo enviesado e não atinge o mínimo de acurácia necessária, a qual normalmente é determinada pelo desenvolvedor.
+
+A partir da representação na Figura \ref{deep:fig:5} é possível exemplificar os fenômenos supracitados, em que na Figura \ref{deep:fig:5}\subref{deep:fig:5.1} se vizualiza uma situação característica de \textit{underfitting} ao tentar utilizar um modelo linear para um tipo de problema não linear. Já na imagem \ref{deep:fig:5}\subref{deep:fig:5.2} se encontra uma situação em que há uma função que é utilizada adequadamente para a situação, tendo esta convergido e com uma boa adaptação para demais situações com contextos similares. E, por fim, há a representação de uma situação com \textit{overfitting} na Figura \ref{deep:fig:5}\subref{deep:fig:5.3}, em que o conjunto está decorado e o modelo se ajustou demais ao conjunto de dados - situação que acontece devido ao uso de funções complexas para situações simples.
+
+\begin{figure}[H]
+   \caption{Fenômenos de \textit{underfitting} e \textit{overfitting}.}
+   \centering
+   \label{deep:fig:5}
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[height=1.5in]{recursos/imagens/deep/under.png}
+        \caption{Fenômeno de \textit{underfitting}.}
+        \label{deep:fig:5.1}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[height=1.5in]{recursos/imagens/deep/apx.png}
+        \caption{Representação de função adequada.}
+        \label{deep:fig:5.2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[height=1.5in]{recursos/imagens/deep/over.png}
+        \caption{Fenômeno de \textit{overfitting}.}
+        \label{deep:fig:5.3}
+    \end{subfigure}
+
+    \vspace*{1 cm}
+    Fonte: retirado e adaptado de \cite{Goodfellow2016}.
+\end{figure}
+
+Alerta-se que em situações em que a função de custo de treinamento continua decrescente e a função de custo de teste começa a aumentar, é provavel que o modelo esteja iniciando uma circunstância de \textit{overfitting}, já que casos de \textit{overfitting} ocorrem quando ambas as funções de custo permanecem altas mesmo após muitas épocas.
+
+Sendo assim, \textit{underfitting} e \textit{overfitting}, quando presentes, devem ser corrigidos, embora os ajustes dos métodos à complexidade da situação ainda sejam feitos a partir de tentativa e erro e com o auxílio de gráficos \cite{Goodfellow2016}.
+
+
+\subsection{Redes Neurais Convolucionais}
+\label{deep:CNN}
+
+Dentre os tipos de rede de aprendizado profundo, a mais utilizada atualmente para trabalhar com visão computacional e processamento de imagens, de modo geral, e que possui valor notório para o trabalho com dados espaciais \cite{Goodfellow2016, ponti2018funciona, Ghosh2019}, destaca-se a denominada \textit{Convolutional Neural Networks}\cite{LeCun1999}, ou a célebre CNN, que tem esse nome por trabalhar com camadas convolucionais.
+
+Evidencia-se que as CNNs são consideradas como estado-da-arte em algumas competições \cite{Parkhi2015}, assim como modelo bioinspirado de sucesso \cite{Goodfellow2016}, visto que esta simula pontos cerebrais responsáveis pela captura de impulsos visuais e outras propriedades que são capturadas pelo córtex visual, além de obter diferentes características que desenvolveram as operações de \textit{pooling} \cite{Goodfellow2016}, que serão descritas na Seção \ref{deep:pooling}.
+
+Em meio à vasta quantidade de arquiteturas presentes para CNN, cita-se: AlexNet \cite{krizhevsky2012imagenet}, VGGNet \cite{Simonyan2015}, ResNet \cite{He2016}, GoogLeNet \cite{Szegedy2015}, MobileNet \cite{Howard2017} e DenseNet \cite{Huang2017}.
+
+Um modelo indicando uma entrada, as camadas convolucionais (Seção \ref{deep:conv}) iniciais, que são utilizadas para extração de atributos, e finais, bem como a o sistema de \textit{pooling} (Seção \ref{deep:pooling}) e a camada de saída (Seção \ref{deep:output}) são representados por meio da Figura \ref{deep:fig:10}:
+
+\begin{figure}[H]
+    \centering
+    \caption{Modelo de CNN.}
+    \includegraphics[width=1\linewidth]{recursos/imagens/deep/cnn.jpg}
+    \label{deep:fig:10}
+
+    \vspace*{1 cm}
+    Fonte: retirada e adaptada de \cite{Minaee2021DeepClassification}.
+\end{figure}
+
+Sendo assim, nas próximas seções fatores que compõem uma rede convolucional serão detalhados, como a camada convolucional (Seção \ref{deep:conv}), a camada de \textit{pooling} (Seção \ref{deep:pooling}), fator \textit{dropout} (Seção \ref{deep:dropout}) e a camada de saída (Seção \ref{deep:output}).
+
+
+\subsubsection{Camada Convolucional}
+\label{deep:conv}
+
+Quando se trata de CNNs, a modelagem de cada neurônio da camada convolucional conta com um filtro que é aplicado na imagem em questão \cite{ponti2018funciona}, de modo que esses filtros também são compostos por pesos e que a convolução é classificada como uma operação linear \cite{Goodfellow2016}, tendo como resultado o que é definido como \textit{feature maps}.
+
+Além disso, é importante ter ciência de que em meio às camadas convolucionais, há N filtros, os quais são definidos de acordo com o problema em questão e que utilizam dos seus resultados para a formação dos tensores, como é comentado por \cite{ponti2018funciona}.
+
+Uma operação de convolução pode ser retratada por meio da Figura \ref{deep:fig:6}, em que é  utilizada de uma imagem de entrada (sendo representada pela maior matriz), assim como a definição de um \textit{kernel} de pesos que convolve com a matriz de entrada para extrair características específicas da imagem, sem perder as informações sobre seu arranjo espacial.
+
+\begin{figure}[H]
+    \centering
+    \caption{Representação do processo de convolução.}
+    \includegraphics[width=1\linewidth]{recursos/imagens/deep/2d_convolution.png}
+    \label{deep:fig:6}
+    
+    \vspace*{1 cm}
+    Fonte: \cite{Peltarion2021Peltarion}.
+\end{figure}
+
+Ainda na Figura \ref{deep:fig:6} é possível visualizar que há uma processo de deslizamento do \textit{kernel} dar continuidade ao processo de convolução que resultará em um dos valores comportados pela saída, processo o qual se repete até a o fim da imagem em ordem de esquerda para a direita, até o fim da linha e de cima para baixo, até o fim das colunas.
+
+Destaca-se que a convolução é um processo de média móvel, ou seja, há o calculo da média ponderada de uma dada janela na imagem, correspondente ao tamanho do \textit{kernel} utilizado, sendo que o \textit{kernel} define os pesos dos respectivos pontos. Por fim, esse \textit{kernel} vai sendo deslizado sobre a imagem, definindo novas janelas na imagem e obtendo suas respectivas médias ponderadas.
+
+
+\subsubsection{Camada de \textit{Pooling}}
+\label{deep:pooling}
+
+No âmbito das camadas de \textit{pooling}, vale citar que são amplamente utilizada nas CNNs para reduzir o tempo de treinamento, visto que estas camadas tem como objetivo a redução de dimensionalidade do mapa de características entre as execuções da rede, algo que fica muito claro ao observar a Figura \ref{deep:fig:7} que dá forma à técnica conhecida como \textit{max pooling}, que captura apenas os maiores valores do \textit{feature map}, de acordo com o deslizamento do \textit{kernel}.
+
+\begin{figure}[H]
+    \centering
+    \caption{\textit{Max pooling}.}
+    \includegraphics[height=1.5in]{recursos/imagens/deep/max_pooling.png}
+    \label{deep:fig:7}
+    
+    \vspace*{1 cm}
+    Fonte: \cite{Peltarion2021Peltarion}.
+\end{figure}
+
+Vale citar que outros modelos de \textit{pooling} também se fazem presentes na literatura, dos quais podem ser citados o \textit{average pooling}, \textit{median pooling} e \textit{weighted average}\cite{Goodfellow2016} ou até mesmo o \textit{global average pooling}, que reduz o \textit{feature map} em um único valor e é exemplificado por meio da Figura \ref{deep:fig:8}.
+
+\begin{figure}[H]
+    \centering
+    \caption{\textit{Global average pooling}.}
+    \includegraphics[height=2.4in]{recursos/imagens/deep/global_average_pooling.png}
+    \label{deep:fig:8}
+    
+    \vspace*{1 cm}
+    Fonte: \cite{Peltarion2021Peltarion}.
+\end{figure}
+
+\subsubsection{\textit{Dropout}}
+\label{deep:dropout}
+
+Dentre as técnicas para a prevenção de \textit{overfitting} \cite{Goodfellow2016}, destaca-se a técnica de \textit{dropout} (Seção \ref{deep:dropout}) que não se aplica na etapa de testes, mas consiste no desligamento aleatório de neurônios de camadas ocultas da rede CNN, de modo que haja uma diminuição do enviesamento de neurônios e eleve a importância dos neurônios restantes.
+
+Esse processo de \textit{dropout} pode ser representado pela Figura \ref{deep:fig:9}, demonstrando apenas ligações em neurônios restantes no lado direito.
+
+\begin{figure}[H]
+    \centering
+    \caption{Processo de \textit{dropout}.}
+    \includegraphics[width=1\linewidth]{recursos/imagens/deep/dropout.png}
+    \label{deep:fig:9}
+    
+    \vspace*{1 cm}
+    Fonte: \cite{Peltarion2021Peltarion}.
+\end{figure}
+
+
+\subsubsection{Camada de Saída}
+\label{deep:output}
+
+Após a composição de várias camadas de convolução com filtros e determinadas camadas de \textit{poolling}, os modelos de CNN também contam com uma camada de saída, a qual se faz necessária para a obtenção das classes identificadas na imagem, sendo que essa camada não afeta questões de performance em relação ao tempo de convergência do do modelo em questão, além de não afetar o desenvolvimento e evolução da etapa de treinamento.
+
+Por fim, para gerar a saída final normalmente se utiliza de funções de ativação como a Softmax (abordada na Seção \ref{deep:soft}), possibilitando encontrar a classe de determinado objeto em uma imagem, por exemplo.

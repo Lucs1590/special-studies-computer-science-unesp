@@ -1,0 +1,36 @@
+\documentclass[a4paper, 12pt]{article}
+\input{bibliotecas}
+
+\begin{document}
+\setstretch{1.5}
+\input{capa}
+\input{contra_capa}
+
+\clearpage
+\pagenumbering{roman}
+
+\newpage
+\input{resumo}
+
+\newpage
+\listoffigures
+
+\newpage
+\listoftables
+
+\newpage
+\tableofcontents
+% ------------
+\clearpage
+\pagenumbering{arabic}
+
+\input{introducao}
+\input{deep}
+\input{image_seg}
+\input{semantic_seg}
+\input{instance_seg}
+\input{panoptic_seg}
+\input{conclusao}
+\input{referencias}
+
+\end{document}
